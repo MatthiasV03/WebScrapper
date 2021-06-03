@@ -57,6 +57,42 @@ public class MainActivity extends AppCompatActivity {
         beschreibungview = (TextView)findViewById(R.id.textView11);
         imageView = findViewById(R.id.imageView);
 
+        button.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            public void onClick(View v) {
+                try{
+                    hideSoftKeyboard();
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+
+                buttonpressed=true;
+                new Thread(() -> {
+                    while(true){
+                        if(gotinfo){
+                            runOnUiThread(new Runnable() {
+
+                                @Override
+                                public void run() {
+
+                                    vornameview.setText("Vorname: "+vorname);
+                                    nachnameview.setText("Nachname: "+nachname);
+                                    gebdatview.setText("Geburtsdatum: "+gebdat);
+                                    gebortview.setText("Geburtsort: "+gebort);
+                                    arbeit_unternehmenview.setText("Arbeit/Unternehmen: "+arbeit_unternehemn);
+                                    beschreibungview.setText("Beschreibung: "+beschreibung);
+
+                                    System.out.println("------------------------------------------------" + picurl);
+
+                                }
+                            });
+                            gotinfo=false;
+                        }
+                    }
+                }).start();
+            }
+        });
+
     }
 
     public void tcpcon(){

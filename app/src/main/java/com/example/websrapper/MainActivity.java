@@ -26,12 +26,24 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    EditText nameeingabe;
+    TextView vornameview,nachnameview,gebdatview,gebortview,arbeit_unternehmenview,beschreibungview;
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        final Button button = findViewById(R.id.button);
+        nameeingabe = findViewById(R.id.editTextTextPersonName);
+        vornameview = (TextView)findViewById(R.id.textView);
+        nachnameview = (TextView)findViewById(R.id.textView3);
+        gebdatview = (TextView)findViewById(R.id.textView5);
+        gebortview = (TextView)findViewById(R.id.textView7);
+        arbeit_unternehmenview = (TextView)findViewById(R.id.textView9);
+        beschreibungview = (TextView)findViewById(R.id.textView11);
+        imageView = findViewById(R.id.imageView);
 
     }
 }

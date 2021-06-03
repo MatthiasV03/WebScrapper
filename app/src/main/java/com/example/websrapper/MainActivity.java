@@ -57,6 +57,13 @@ public class MainActivity extends AppCompatActivity {
         beschreibungview = (TextView)findViewById(R.id.textView11);
         imageView = findViewById(R.id.imageView);
 
+        nameeingabe.setText("Name");
+
+        new Thread(() -> {
+            tcpcon();
+        }).start();
+
+
         button.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             public void onClick(View v) {
@@ -83,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
                                     beschreibungview.setText("Beschreibung: "+beschreibung);
 
                                     System.out.println("------------------------------------------------" + picurl);
-
                                     if(picurl!=""){
                                         Picasso.get()
                                                 .load(picurl)
@@ -99,7 +105,13 @@ public class MainActivity extends AppCompatActivity {
                 }).start();
             }
         });
+    }
 
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void hideSoftKeyboard() {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
     }
 
     public void tcpcon(){
@@ -148,9 +160,5 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    public void hideSoftKeyboard() {
-        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-    }
+
 }

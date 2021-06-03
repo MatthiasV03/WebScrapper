@@ -84,6 +84,13 @@ public class MainActivity extends AppCompatActivity {
 
                                     System.out.println("------------------------------------------------" + picurl);
 
+                                    if(picurl!=""){
+                                        Picasso.get()
+                                                .load(picurl)
+                                                .resize(750, 750)
+                                                .centerCrop()
+                                                .into(imageView);
+                                    }
                                 }
                             });
                             gotinfo=false;

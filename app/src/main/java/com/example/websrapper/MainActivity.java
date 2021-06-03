@@ -25,10 +25,22 @@ import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity {
+    String server = "10.171.154.144";
+    Boolean buttonpressed=false;
+    Boolean check = false;
+    ArrayList<String> read = new ArrayList();
+    Boolean gotinfo = false;
 
     EditText nameeingabe;
     TextView vornameview,nachnameview,gebdatview,gebortview,arbeit_unternehmenview,beschreibungview;
     ImageView imageView;
+    String vorname;
+    String nachname;
+    String gebdat;
+    String gebort;
+    String arbeit_unternehemn;
+    String beschreibung;
+    String picurl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,5 +57,51 @@ public class MainActivity extends AppCompatActivity {
         beschreibungview = (TextView)findViewById(R.id.textView11);
         imageView = findViewById(R.id.imageView);
 
+    }
+
+    public void tcpcon(){
+        char a ;
+        Socket socket = null;
+        try {
+            socket = new Socket( server, 1234);
+            PrintStream out = new PrintStream( socket.getOutputStream() );
+            BufferedReader in = new BufferedReader( new InputStreamReader( socket.getInputStream() ) );
+            while(true){
+                if(buttonpressed){
+                    if(check){
+                        break;
+                    }
+                    out.println(nameeingabe.getText().toString());
+                    out.flush();
+
+                    a = (char)in.read();
+                    String File=" ";
+                    while(a != (char)94) {
+                        if((int) a == 124){
+                            read.add(File);
+                            File = "";
+                        }else{
+                            File = File + a;
+                        }
+                        a = (char) in.read();
+                    }
+                    vorname = read.get(0);
+                    nachname = read.get(1);
+                    gebdat = read.get(2);
+                    gebort = read.get(3);
+                    arbeit_unternehemn = read.get(4);
+                    beschreibung = read.get(5);
+                    picurl=read.get(6);
+                    gotinfo=true;
+
+                    buttonpressed=false;
+                }
+            }
+            in.close();
+            out.close();
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
